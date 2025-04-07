@@ -1,0 +1,70 @@
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10002491
+Server version: 8.0.40 Source distribution
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE TABLE Carrito1 (
+    -> id int(18) NOT NULL,
+    -> Articulos varchar(15),
+    -> PRIMARY KEY (id,Articulos)
+    -> );
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+
+mysql> INSERT INTO Carrito1 Values 
+    -> (1, 'Azucar'),
+    -> (2, 'Pan'),
+    -> (3, 'Jugo'),
+    -> (4, 'Refresco'),
+    -> (5, 'Harina');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> REATE TABLE Carrito2 (
+    -> id int(18) NOT NULL,
+    -> Articulos varchar(15),
+    -> PRIMARY KEY (id,Articulos)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syn
+tax to use near 'REATE TABLE Carrito2 (
+id int(18) NOT NULL,
+Articulos varchar(15),
+PRIMARY KEY (' at line 1
+mysql> CREATE TABLE Carrito2 (
+    -> id int(18) NOT NULL,
+    -> Articulos varchar(15),
+    -> PRIMARY KEY (id,Articulos)
+    -> );
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+mysql> ^C
+^C
+mysql> INSERT INTO Carrito2 Values 
+    -> (1, 'Azucar'),
+    -> (2, 'Pan'),
+    -> (6, 'Mantequilla'),
+    -> (7, 'Queso'),
+    -> (8, 'Manzana');  
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+mysql> Select * from Carrito1 left join Carrito2 on Carrito1.Articulos = Carrito2.Articulos
+    -> UNION 
+    -> Select * from Carrito1 right join Carrito2 on Carrito1.Articulos = Carrito2.Articulos;
++------+-----------+------+-------------+
+| id   | Articulos | id   | Articulos   |
++------+-----------+------+-------------+
+|    1 | Azucar    |    1 | Azucar      |
+|    2 | Pan       |    2 | Pan         |
+|    3 | Jugo      | NULL | NULL        |
+|    4 | Refresco  | NULL | NULL        |
+|    5 | Harina    | NULL | NULL        |
+| NULL | NULL      |    6 | Mantequilla |
+| NULL | NULL      |    7 | Queso       |
+| NULL | NULL      |    8 | Manzana     |
++------+-----------+------+-------------+
+8 rows in set (0.00 sec)
