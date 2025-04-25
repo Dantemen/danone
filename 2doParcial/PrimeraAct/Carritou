@@ -1,0 +1,50 @@
+mysql> CREATE TABLE Carrito1 (
+    -> id int(18) NOT NULL,
+    -> Articulos varchar(15),
+    -> PRIMARY KEY (id,Articulos)
+    -> );
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+mysql> INSERT INTO Carrito1 Values 
+    -> (1, 'Azucar'),
+    -> (2, 'Pan'),
+    -> (3, 'Jugo'),
+    -> (4, 'Refresco'),
+    -> (5, 'Harina');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+mysql> CREATE TABLE Carrito2 (
+    -> id int(18) NOT NULL,
+    -> Articulos varchar(15),
+    -> PRIMARY KEY (id,Articulos)
+    -> );
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> INSERT INTO Carrito2 (
+    -> ^C
+
+^C
+mysql> INSERT INTO Carrito2 Values 
+    -> (1, 'Azucar'),
+    -> (2, 'Pan'),
+    -> (6, 'Mantequilla'),
+    -> (7, 'Queso'),
+    -> (8, 'Manzana');  
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> 
+mysql> Select * from Carrito1 left join Carrito2 on Carrito1.Articulos = Carrito2.Articulos
+    -> UNION 
+    -> Select * from Carrito1 right join Carrito2 on Carrito1.Articulos = Carrito2.Articulos;
++------+-----------+------+-------------+
+| id   | Articulos | id   | Articulos   |
++------+-----------+------+-------------+
+|    1 | Azucar    |    1 | Azucar      |
+|    2 | Pan       |    2 | Pan         |
+|    3 | Jugo      | NULL | NULL        |
+|    4 | Refresco  | NULL | NULL        |
+|    5 | Harina    | NULL | NULL        |
+| NULL | NULL      |    6 | Mantequilla |
+| NULL | NULL      |    7 | Queso       |
+| NULL | NULL      |    8 | Manzana     |
++------+-----------+------+-------------+
