@@ -1,0 +1,38 @@
+mysql> show tables;
++----------------------------------+
+| Tables_in_DanteMenn$MisionaMarte |
++----------------------------------+
+| MisionMarte                      |
++----------------------------------+
+1 row in set (0.00 sec)
+mysql> 
+mysql> INSERT INTO MisionMarte values
+    -> (1001,'Geólogo'),
+    -> (1001,'Astrónomo'),
+    -> (1001, 'Bioquímico'),
+    -> (1001, 'Técnico'),
+    -> (2002, 'Cirujano'),
+Query OK, 10 rows affected (0.00 sec)
+    -> (2002, 'Mecánico'),
+    -> (2002, 'Geólogo'),
+    -> (3003, 'Geólogo'),
+    -> (3003, 'Astrónomo'),
+    -> (4004, 'Ingeniero');
+Query OK, 10 rows affected (0.00 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> SELECT
+    ->     Id_Candidato
+    -> FROM
+    ->     MisionMarte
+    -> WHERE
+    ->     Descripcion IN ('Geólogo', 'Astrónomo', 'Bioquímico')
+    -> GROUP BY
+    ->     Id_Candidato
+    -> HAVING
+    ->     COUNT(DISTINCT Descripcion) = 3;
++--------------+
+| Id_Candidato |
++--------------+
+|         1001 |
++--------------+
