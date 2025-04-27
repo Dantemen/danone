@@ -1,0 +1,26 @@
+mysql> show tables;
++------------------------------------+
+| Tables_in_DanteMenn$PromedioDeDias |
++------------------------------------+
+| Promedio                           |
++------------------------------------+
+1 row in set (0.00 sec)
+mysql> SELECT 
+    ->     f1.Desarrollo,
+    ->     ROUND(AVG(DATEDIFF(f1.Terminacion, f2.Terminacion))) AS Promedio
+    -> FROM Promedio f1
+    -> JOIN Promedio f2 
+    ->     ON f1.Desarrollo = f2.Desarrollo AND f2.Terminacion = (
+    ->         SELECT MAX(f3.Terminacion)
+    ->         FROM Promedio f3
+    ->         WHERE f3.Desarrollo = f1.Desarrollo AND f3.Terminacion < f1.Terminacion
+    ->     )
+    -> GROUP BY f1.Desarrollo;
++------------+----------+
+| Desarrollo | Promedio |
++------------+----------+
+| App        |       23 |
+| RestAPI    |        7 |
+| Web        |        9 |
++------------+----------+
+3 rows in set (0.00 sec)
