@@ -1,7 +1,0 @@
-with t as
-(select *,  id - row_number()over(order by id asc) as rnk
-from stadium
-where people >= 100)
-select id, visit_date, people
-from t
-where rnk in(select rnk from t group by rnk having count(*)>=3) -- replace 3 with any n
